@@ -112,7 +112,7 @@ Many items have **multi-unit scaling** - they pick the appropriate unit based on
 | 🚋 | njts® | $5.90 |
 | 🖱️ | magic-mice® | $99 |
 | 📱 | iphones® | $999 |
-| 🩸 | blood® | drop→tsp→tbsp→oz→cup→pint→gallon |
+| 🩸 | pints-o-blood® | drop→tsp→tbsp→oz→cup→pint→gallon |
 | 🧸 | paddingtons® | $30 |
 | 🥐 | cronuts® | $7.75 |
 | 🎵 | apple-music® | $0.004/stream |
@@ -278,3 +278,4 @@ Then restart Claude Code. That's it.
 - `jq` (for JSON parsing)
 - `bc` (for cost calculation)
 - `git` (for branch detection)
+- `perl` (for JSONL parsing)

@@ -1,0 +1,18 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Cache directories
+.claude-usage.d/
+
+# Environment files
+.env
+.env.local
+.env.*.local
