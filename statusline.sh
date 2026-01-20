@@ -115,7 +115,14 @@ get_oauth_token() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS: get from Keychain
         local creds=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null)
-        echo "$creds" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null
+        # Check if credentials are hex-encoded (newer Claude Code versions)
+        if [[ "$creds" =~ ^[0-9a-fA-F]+$ ]]; then
+            local decoded=$(echo "$creds" | xxd -r -p)
+            # Extract accessToken using regex (hex-decoded JSON may be malformed)
+            echo "$decoded" | grep -o '"accessToken":"[^"]*"' | head -1 | cut -d'"' -f4
+        else
+            echo "$creds" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null
+        fi
     else
         # Linux: check config file
         local config_file="$HOME/.config/claude/credentials.json"
@@ -545,6 +552,8 @@ fi
 format_number() {
     local num=$1
     local result
+    # Handle empty or non-numeric input
+    [[ -z "$num" || ! "$num" =~ ^[0-9]+$ ]] && { echo "0"; return; }
     if [ "$num" -ge 1000000000000 ]; then
         result=$(printf "%.1fT" "$(echo "$num / 1000000000000" | bc -l)")
     elif [ "$num" -ge 1000000000 ]; then
