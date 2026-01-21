@@ -458,9 +458,9 @@ FUN_COST_ITEM_INDEX=$((ITEM_CYCLE % 40))  # 0-39=fun cost items
 ALLTIME_NORMAL_INDEX=$((NOW_DIV_10 % 40))
 ALLTIME_ABSURD_INDEX=$((NOW_DIV_10 % 8))
 
-# Calculate context percentage (scaled to auto-compact threshold ~75% of context)
-# CURRENT_TOKENS already extracted from single jq call above
-AUTO_COMPACT_THRESHOLD=$((CONTEXT_SIZE * 75 / 100))
+# Calculate context percentage (scaled to auto-compact threshold)
+# 155K is the actual compression trigger point (out of 220K total context)
+AUTO_COMPACT_THRESHOLD=155000
 if [ "$CURRENT_TOKENS" -gt 0 ] 2>/dev/null; then
     PERCENT_USED=$((CURRENT_TOKENS * 100 / AUTO_COMPACT_THRESHOLD))
     [ "$PERCENT_USED" -gt 100 ] && PERCENT_USED=100
